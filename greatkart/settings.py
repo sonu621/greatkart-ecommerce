@@ -128,3 +128,19 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/meida/'
 MEDIA_ROOT = BASE_DIR /'meida'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: "danger",
+}
+
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'sonu.stackx@gmail.com'
+EMAIL_HOST_PASSWORD = 'qyyi yawq wyse cdro'
