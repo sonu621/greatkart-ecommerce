@@ -1,0 +1,30 @@
+<aside class="col-md-3">
+    <ul class="list-group">
+        <a href="{% url 'dashboard' %}"
+           class="list-group-item {% if request.path == '/accounts/' %}active{% endif %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'my_order' %}"
+           class="list-group-item {% if '/my_order/' in request.path %}active{% endif %}">
+            My Orders
+        </a>
+
+        <a href="{% url 'edit_profile' %}"
+           class="list-group-item {% if '/edit_profile/' in request.path %}active{% endif %}">
+            Edit Profile
+        </a>
+
+        <a href="{% url 'change_password' %}"
+           class="list-group-item {% if '/change_password/' in request.path %}active{% endif %}">
+            Settings
+        </a>
+    </ul>
+
+    <br>
+
+    <a class="btn btn-light btn-block" href="{% url 'logout' %}">
+        <i class="fa fa-power-off"></i>
+        <span class="text">Log out</span>
+    </a>
+</aside>

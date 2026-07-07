@@ -1,0 +1,80 @@
+{% extends "base.html" %} 
+
+{% block title %} My Orders {% endblock %} 
+
+{% block content %} 
+{% load static %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y bg">
+  {% include "includes/alerts.html" %}
+  <div class="container">
+    <div class="row">
+      {% include "includes/dashboard_sidebar.html" %}
+      <main class="col-md-9">
+        <article class="card">
+          <header class="card-header">
+            <strong class="d-inline-block mr-3">Your order history</strong>
+          </header>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12" style="text-align: center">
+                <div class="card">
+                  <div class="card-header">
+                    <strong>My Orders</strong>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-hover">
+                        <thead class="table-dark">
+                          <tr>
+                            <th>Order #</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Order Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for order in orders %}
+                          <tr>
+                            <td><a href="{% url 'order_details' order.order_number %}">
+                                {{ order.order_number }}
+                              </a></td>
+                            <td>{{ order.full_name }}</td>
+                            <td>{{ order.phone }}</td>
+                            <td>${{ order.order_total }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.created_at|date:"d M, Y" }}</td>
+                            <td>
+                              <a href="{% url 'order_details' order.order_number %}" class="btn btn-sm btn-primary">
+                                View
+                              </a> 
+                            </td>
+                          </tr>
+                          {% empty %}
+                          <tr>
+                            <td colspan="7" class="text-center">
+                              No orders found.
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </main>
+    </div>
+  </div>
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Account
+from .models import Account, UserProfile
 
 
 class RegistrationForm(forms.ModelForm):
@@ -37,4 +37,43 @@ class RegistrationForm(forms.ModelForm):
             self.fields[field].widget.attrs['class'] = 'form-control'
 
 
-   
+class BootstrapModelForm(forms.ModelForm):
+    """
+    Base ModelForm that automatically applies Bootstrap styling
+    to all form fields.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field in self.fields.values():
+            css_class = 'form-control'
+
+            if isinstance(field.widget, forms.FileInput):
+                css_class = 'form-control'
+
+            field.widget.attrs.setdefault('class', css_class)
+
+
+class UserForm(BootstrapModelForm):
+    class Meta:
+        model = Account
+        fields = (
+            'first_name',
+            'last_name',
+            'phone_number',
+        )
+
+
+class UserProfileForm(BootstrapModelForm):
+    profile_picture = forms.ImageField(required=False, error_messages= {'invalid':("Image files only")}, widget=forms.FileInput)
+    class Meta:
+        model = UserProfile
+        fields = (
+            'profile_picture',
+            'address_line_1',
+            'address_line_2',
+            'city',
+            'state',
+            'country',
+        )

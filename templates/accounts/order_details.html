@@ -1,0 +1,127 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block title %} Order Details {%endblock %} 
+
+{% block content %}
+
+<div class="container py-5">
+
+
+  <!-- Invoice -->
+  <div class="card border-0 shadow rounded-4">
+    <div class="card-body p-5">
+      <!-- Header -->
+      <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+          <img src="{% static 'images/logo.png' %}" alt="Logo" height="45" />
+        </div>
+
+        <div class="col-md-6 text-md-end mt-4 mt-md-0">
+          <h5 class="fw-bold">Invoice To</h5>
+
+          <p class="mb-1">{{ order.full_name }}</p>
+          <p class="mb-1">{{ order.full_address }}</p>
+          <p class="mb-1">{{ order.city }}, {{ order.state }}</p>
+          <p class="mb-0">{{ order.country }} - {{ order.pin_code }}</p>
+        </div>
+      </div>
+
+      <!-- Order Details -->
+      <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+          <small class="text-muted">Order Number</small>
+          <h6>#{{ order.order_number }}</h6>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <small class="text-muted">Transaction ID</small>
+          <h6>{{order.payment.payment_id }}</h6>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <small class="text-muted">Order Date</small>
+          <h6>{{ order.created_at }}</h6>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <small class="text-muted">Payment Status</small><br />
+
+          <span class="badge bg-success px-3 py-2"> {{ order.payment.status }} </span>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Product</th>
+              <th class="text-center">Quantity</th>
+              <th class="text-end">Price</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for item in order_details %}
+
+            <tr>
+              <td>
+                <strong>{{ item.product.product_name }}</strong>
+
+                {% if item.variation.all %}
+                <small class="text-muted d-block mt-1">
+                  {% for variation in item.variation.all %}
+                   {{ variation.variation_category|capfirst }}:
+                   {{ variation.variation_value|capfirst }}<br />
+                  {% endfor %}
+                </small>
+                {% endif %}
+              </td>
+
+              <td class="text-center">{{ item.quantity }}</td>
+
+              <td class="text-end">₹{{ item.product_price }}</td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <td colspan="2" class="text-end fw-semibold">Subtotal</td>
+
+              <td class="text-end">₹{{ subtotal }}</td>
+            </tr>
+
+            <tr>
+              <td colspan="2" class="text-end fw-semibold">Tax</td>
+
+              <td class="text-end">₹{{ order.tax }}</td>
+            </tr>
+
+            <tr class="table-light">
+              <td colspan="2" class="text-end fs-5 fw-bold">Grand Total</td>
+
+              <td class="text-end fs-5 fw-bold text-success">
+                ₹{{ order.order_total }}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <hr class="my-5" />
+
+      <div class="text-center">
+        <h5 class="fw-bold">Thank you for shopping with us ❤️</h5>
+
+        <p class="text-muted mb-0">
+          We appreciate your business and hope to see you again soon.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

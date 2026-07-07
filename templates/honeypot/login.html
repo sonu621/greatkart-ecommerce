@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Admin Login</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #1f2937, #417690);
+        font-family: "Segoe UI", Arial, sans-serif;
+      }
+
+      .login-card {
+        width: 380px;
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+      }
+
+      .header {
+        background: #417690;
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+      }
+
+      .header .logo {
+        width: 70px;
+        height: 70px;
+        background: white;
+        color: #417690;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .header h2 {
+        margin: 15px 0 5px;
+        font-weight: 500;
+      }
+
+      .header p {
+        margin: 0;
+        opacity: 0.8;
+        font-size: 14px;
+      }
+
+      .form-area {
+        padding: 35px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      .input-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+      }
+
+      .input-group input {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        outline: none;
+      }
+
+      .input-group input:focus {
+        border-color: #417690;
+        box-shadow: 0 0 5px rgba(65, 118, 144, 0.4);
+      }
+
+      button {
+        width: 100%;
+        padding: 13px;
+        background: #417690;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #205067;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        color: #777;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="login-card">
+      <div class="header">
+        <div class="logo">A</div>
+
+        <h2>Admin Panel</h2>
+
+        <p>Secure Dashboard Login</p>
+      </div>
+
+      <div class="form-area">
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="input-group">
+            <label> Username </label>
+
+            <input
+              type="text"
+              name="username"
+              placeholder="Enter admin username"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label> Password </label>
+
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <button type="submit">Login to Dashboard</button>
+        </form>
+
+        <div class="footer">© 2026 Admin System</div>
+      </div>
+    </div>
+  </body>
+</html>
