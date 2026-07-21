@@ -1,0 +1,322 @@
+[
+    {
+        "model": "store.product",
+        "pk": 1,
+        "fields": {
+            "product_name": "Apple iPhone 16 Pro",
+            "slug": "apple-iphone-16-pro",
+            "description": "Latest Apple smartphone with A18 chip and advanced camera system.",
+            "price": "1199.99",
+            "images": "photos/products/iphone16pro.jpg",
+            "stock": 45,
+            "is_available": true,
+            "category": 1,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 2,
+        "fields": {
+            "product_name": "Men's Cotton T-Shirt",
+            "slug": "mens-cotton-tshirt",
+            "description": "Premium 100% cotton round-neck t-shirt.",
+            "price": "24.99",
+            "images": "photos/products/mens_tshirt.jpg",
+            "stock": 150,
+            "is_available": true,
+            "category": 2,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 3,
+        "fields": {
+            "product_name": "Non-Stick Cookware Set",
+            "slug": "non-stick-cookware-set",
+            "description": "10-piece non-stick cookware set for modern kitchens.",
+            "price": "149.99",
+            "images": "photos/products/cookware.jpg",
+            "stock": 35,
+            "is_available": true,
+            "category": 3,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 4,
+        "fields": {
+            "product_name": "Python Programming Book",
+            "slug": "python-programming-book",
+            "description": "Complete guide to Python programming for beginners and professionals.",
+            "price": "39.99",
+            "images": "photos/products/python_book.jpg",
+            "stock": 80,
+            "is_available": true,
+            "category": 4,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 5,
+        "fields": {
+            "product_name": "Vitamin C Face Serum",
+            "slug": "vitamin-c-face-serum",
+            "description": "Brightening serum enriched with Vitamin C.",
+            "price": "19.99",
+            "images": "photos/products/face_serum.jpg",
+            "stock": 120,
+            "is_available": true,
+            "category": 5,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 6,
+        "fields": {
+            "product_name": "Adjustable Dumbbell Set",
+            "slug": "adjustable-dumbbell-set",
+            "description": "20kg adjustable dumbbell set for home workouts.",
+            "price": "199.99",
+            "images": "photos/products/dumbbell.jpg",
+            "stock": 25,
+            "is_available": true,
+            "category": 6,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 7,
+        "fields": {
+            "product_name": "Organic Basmati Rice 5kg",
+            "slug": "organic-basmati-rice-5kg",
+            "description": "Premium long-grain basmati rice.",
+            "price": "18.99",
+            "images": "photos/products/basmati_rice.jpg",
+            "stock": 100,
+            "is_available": true,
+            "category": 7,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 8,
+        "fields": {
+            "product_name": "LEGO City Police Station",
+            "slug": "lego-city-police-station",
+            "description": "Creative LEGO building set for children.",
+            "price": "89.99",
+            "images": "photos/products/lego_police.jpg",
+            "stock": 40,
+            "is_available": true,
+            "category": 8,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 9,
+        "fields": {
+            "product_name": "Modern Office Desk",
+            "slug": "modern-office-desk",
+            "description": "Wooden office desk with storage drawers.",
+            "price": "249.99",
+            "images": "photos/products/office_desk.jpg",
+            "stock": 18,
+            "is_available": true,
+            "category": 9,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 10,
+        "fields": {
+            "product_name": "Samsung Galaxy Watch 7",
+            "slug": "samsung-galaxy-watch-7",
+            "description": "Advanced smartwatch with health tracking.",
+            "price": "349.99",
+            "images": "photos/products/galaxy_watch7.jpg",
+            "stock": 60,
+            "is_available": true,
+            "category": 10,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 11,
+        "fields": {
+            "product_name": "Sterling Silver Necklace",
+            "slug": "sterling-silver-necklace",
+            "description": "Elegant sterling silver necklace.",
+            "price": "89.99",
+            "images": "photos/products/necklace.jpg",
+            "stock": 45,
+            "is_available": true,
+            "category": 11,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 12,
+        "fields": {
+            "product_name": "Digital Blood Pressure Monitor",
+            "slug": "digital-blood-pressure-monitor",
+            "description": "Accurate digital BP monitor for home use.",
+            "price": "59.99",
+            "images": "photos/products/bp_monitor.jpg",
+            "stock": 70,
+            "is_available": true,
+            "category": 12,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 13,
+        "fields": {
+            "product_name": "Premium Dog Food 10kg",
+            "slug": "premium-dog-food-10kg",
+            "description": "Nutritious dog food for adult dogs.",
+            "price": "54.99",
+            "images": "photos/products/dog_food.jpg",
+            "stock": 90,
+            "is_available": true,
+            "category": 13,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 14,
+        "fields": {
+            "product_name": "Baby Stroller",
+            "slug": "baby-stroller",
+            "description": "Lightweight foldable baby stroller.",
+            "price": "179.99",
+            "images": "photos/products/stroller.jpg",
+            "stock": 22,
+            "is_available": true,
+            "category": 14,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 15,
+        "fields": {
+            "product_name": "Wireless Keyboard",
+            "slug": "wireless-keyboard",
+            "description": "Slim wireless keyboard for office use.",
+            "price": "49.99",
+            "images": "photos/products/keyboard.jpg",
+            "stock": 65,
+            "is_available": true,
+            "category": 15,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 16,
+        "fields": {
+            "product_name": "Car Vacuum Cleaner",
+            "slug": "car-vacuum-cleaner",
+            "description": "Portable vacuum cleaner for cars.",
+            "price": "39.99",
+            "images": "photos/products/car_vacuum.jpg",
+            "stock": 55,
+            "is_available": true,
+            "category": 16,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 17,
+        "fields": {
+            "product_name": "Garden Hose 30m",
+            "slug": "garden-hose-30m",
+            "description": "Durable garden watering hose.",
+            "price": "34.99",
+            "images": "photos/products/garden_hose.jpg",
+            "stock": 40,
+            "is_available": true,
+            "category": 17,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 18,
+        "fields": {
+            "product_name": "Yamaha Acoustic Guitar",
+            "slug": "yamaha-acoustic-guitar",
+            "description": "Beginner-friendly acoustic guitar.",
+            "price": "299.99",
+            "images": "photos/products/acoustic_guitar.jpg",
+            "stock": 20,
+            "is_available": true,
+            "category": 18,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 19,
+        "fields": {
+            "product_name": "PlayStation 5 Console",
+            "slug": "playstation-5-console",
+            "description": "Next-generation gaming console.",
+            "price": "499.99",
+            "images": "photos/products/ps5.jpg",
+            "stock": 30,
+            "is_available": true,
+            "category": 19,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.product",
+        "pk": 20,
+        "fields": {
+            "product_name": "Travel Backpack 45L",
+            "slug": "travel-backpack-45l",
+            "description": "Water-resistant backpack for travel and hiking.",
+            "price": "79.99",
+            "images": "photos/products/travel_backpack.jpg",
+            "stock": 75,
+            "is_available": true,
+            "category": 20,
+            "created_date": "2026-07-11T10:00:00Z",
+            "modified_date": "2026-07-11T10:00:00Z"
+        }
+    }
+]

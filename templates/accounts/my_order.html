@@ -1,80 +1,232 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %} My Orders {% endblock %} 
+{% block title %}My Orders{% endblock %}
 
-{% block content %} 
+{% block content %}
 {% load static %}
 
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-conten padding-y bg">
-  {% include "includes/alerts.html" %}
-  <div class="container">
-    <div class="row">
-      {% include "includes/dashboard_sidebar.html" %}
-      <main class="col-md-9">
-        <article class="card">
-          <header class="card-header">
-            <strong class="d-inline-block mr-3">Your order history</strong>
-          </header>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12" style="text-align: center">
-                <div class="card">
-                  <div class="card-header">
-                    <strong>My Orders</strong>
-                  </div>
+<!-- ========================= MY ORDERS SECTION ========================= -->
+<section class="py-8 md:py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 flex items-center gap-3">
+        <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">My Orders</span>
+        <span class="text-sm font-medium bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full">{{ orders|length }} orders</span>
+      </h1>
+      <p class="text-slate-500 mt-1">Track and manage all your orders in one place</p>
+    </div>
 
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-hover">
-                        <thead class="table-dark">
-                          <tr>
-                            <th>Order #</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Order Total</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {% for order in orders %}
-                          <tr>
-                            <td><a href="{% url 'order_details' order.order_number %}">
-                                {{ order.order_number }}
-                              </a></td>
-                            <td>{{ order.full_name }}</td>
-                            <td>{{ order.phone }}</td>
-                            <td>${{ order.order_total }}</td>
-                            <td>{{ order.status }}</td>
-                            <td>{{ order.created_at|date:"d M, Y" }}</td>
-                            <td>
-                              <a href="{% url 'order_details' order.order_number %}" class="btn btn-sm btn-primary">
-                                View
-                              </a> 
-                            </td>
-                          </tr>
-                          {% empty %}
-                          <tr>
-                            <td colspan="7" class="text-center">
-                              No orders found.
-                            </td>
-                          </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+    <!-- Include Alerts -->
+    {% include "includes/alerts.html" %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      
+      <!-- Sidebar -->
+      {% include "includes/dashboard_sidebar.html" %}
+
+      <!-- Main Content -->
+      <main class="lg:col-span-3">
+        <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          
+          <!-- Card Header -->
+          <div class="p-6 border-b border-slate-100 bg-gradient-to-r from-slate-50/50 to-indigo-50/30">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-2xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                  </svg>
+                </div>
+                <div>
+                  <strong class="text-lg font-bold text-slate-800">Your Order History</strong>
+                  <p class="text-sm text-slate-500">Complete list of all your orders</p>
+                </div>
+              </div>
+              <!-- Order Stats -->
+              <div class="flex items-center gap-4 text-sm">
+                <div class="text-center">
+                  <div class="font-bold text-indigo-600">{{ orders|length }}</div>
+                  <div class="text-xs text-slate-400">Total</div>
+                </div>
+                <div class="w-px h-8 bg-slate-200"></div>
+                <div class="text-center">
+                  <div class="font-bold text-amber-600">{{ pending_orders|default:"0" }}</div>
+                  <div class="text-xs text-slate-400">Pending</div>
+                </div>
+                <div class="w-px h-8 bg-slate-200"></div>
+                <div class="text-center">
+                  <div class="font-bold text-green-600">{{ completed_orders|default:"0" }}</div>
+                  <div class="text-xs text-slate-400">Completed</div>
                 </div>
               </div>
             </div>
           </div>
-        </article>
+
+          <!-- Table Body -->
+          <div class="p-6">
+            {% if orders %}
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead>
+                    <tr class="text-left border-b border-slate-200">
+                      <th class="pb-3 pr-3 font-semibold text-slate-600 text-xs uppercase tracking-wider">Order #</th>
+                      <th class="pb-3 pr-3 font-semibold text-slate-600 text-xs uppercase tracking-wider hidden md:table-cell">Name</th>
+                      <th class="pb-3 pr-3 font-semibold text-slate-600 text-xs uppercase tracking-wider hidden lg:table-cell">Phone</th>
+                      <th class="pb-3 pr-3 font-semibold text-slate-600 text-xs uppercase tracking-wider">Total</th>
+                      <th class="pb-3 pr-3 font-semibold text-slate-600 text-xs uppercase tracking-wider">Status</th>
+                      <th class="pb-3 pr-3 font-semibold text-slate-600 text-xs uppercase tracking-wider hidden md:table-cell">Date</th>
+                      <th class="pb-3 font-semibold text-slate-600 text-xs uppercase tracking-wider text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in orders %}
+                      <tr class="border-b border-slate-100 hover:bg-slate-50/50 transition-colors duration-200">
+                        <!-- Order Number -->
+                        <td class="py-3 pr-3">
+                          <a href="{% url 'order_details' order.order_number %}" 
+                             class="font-semibold text-indigo-600 hover:text-indigo-700 hover:underline transition-colors duration-200">
+                            #{{ order.order_number|truncatechars:10 }}
+                          </a>
+                        </td>
+                        
+                        <!-- Full Name -->
+                        <td class="py-3 pr-3 text-slate-600 hidden md:table-cell">
+                          {{ order.full_name }}
+                        </td>
+                        
+                        <!-- Phone -->
+                        <td class="py-3 pr-3 text-slate-500 hidden lg:table-cell">
+                          {{ order.phone }}
+                        </td>
+                        
+                        <!-- Order Total -->
+                        <td class="py-3 pr-3 font-bold text-slate-800">
+                          ₹{{ order.order_total|floatformat:2 }}
+                        </td>
+                        
+                        <!-- Status Badge -->
+                        <td class="py-3 pr-3">
+                          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium
+                            {% if order.status == 'Completed' or order.status == 'Delivered' %}
+                              bg-green-100 text-green-700
+                            {% elif order.status == 'Pending' or order.status == 'Processing' %}
+                              bg-amber-100 text-amber-700
+                            {% elif order.status == 'Cancelled' %}
+                              bg-red-100 text-red-700
+                            {% else %}
+                              bg-blue-100 text-blue-700
+                            {% endif %}">
+                            <span class="w-1 h-1 rounded-full
+                              {% if order.status == 'Completed' or order.status == 'Delivered' %}
+                                bg-green-500
+                              {% elif order.status == 'Pending' or order.status == 'Processing' %}
+                                bg-amber-500
+                              {% elif order.status == 'Cancelled' %}
+                                bg-red-500
+                              {% else %}
+                                bg-blue-500
+                              {% endif %}">
+                            </span>
+                            {{ order.status }}
+                          </span>
+                        </td>
+                        
+                        <!-- Date -->
+                        <td class="py-3 pr-3 text-slate-500 text-xs hidden md:table-cell">
+                          {{ order.created_at|date:"d M, Y" }}
+                        </td>
+                        
+                        <!-- Action -->
+                        <td class="py-3 text-right">
+                          <a href="{% url 'order_details' order.order_number %}" 
+                             class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-xs font-medium rounded-xl transition-all duration-200 hover:scale-105">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <span>View</span>
+                          </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination -->
+              {% if orders.has_other_pages %}
+                <div class="mt-6 pt-4 border-t border-slate-100">
+                  <nav class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="text-sm text-slate-500">
+                      Showing page {{ orders.number }} of {{ orders.paginator.num_pages }}
+                    </div>
+                    <ul class="flex items-center gap-1">
+                      {% if orders.has_previous %}
+                        <li>
+                          <a href="?page={{ orders.previous_page_number }}" 
+                             class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-200 transition-all duration-200 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                            </svg>
+                          </a>
+                        </li>
+                      {% endif %}
+
+                      {% for i in orders.paginator.page_range %}
+                        {% if orders.number == i %}
+                          <li>
+                            <span class="px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-xl text-sm font-bold shadow-md shadow-indigo-200/50">
+                              {{ i }}
+                            </span>
+                          </li>
+                        {% else %}
+                          <li>
+                            <a href="?page={{ i }}" 
+                               class="px-3.5 py-1.5 bg-white border border-slate-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-200 transition-all duration-200 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                              {{ i }}
+                            </a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% if orders.has_next %}
+                        <li>
+                          <a href="?page={{ orders.next_page_number }}" 
+                             class="px-3 py-1.5 bg-white border border-slate-200 rounded-xl hover:bg-indigo-50 hover:border-indigo-200 transition-all duration-200 text-sm font-medium text-slate-600 hover:text-indigo-600">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                          </a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </nav>
+                </div>
+              {% endif %}
+
+            {% else %}
+              <!-- Empty State -->
+              <div class="text-center py-12">
+                <div class="text-6xl mb-4">📦</div>
+                <h3 class="text-2xl font-bold text-slate-700">No Orders Yet</h3>
+                <p class="text-slate-500 mt-2">You haven't placed any orders yet. Start shopping now!</p>
+                <a href="{% url 'store' %}" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold rounded-2xl shadow-lg shadow-indigo-200/50 hover:shadow-indigo-300/60 transition-all duration-300 hover:scale-105">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                  Start Shopping
+                </a>
+              </div>
+            {% endif %}
+          </div>
+
+        </div>
       </main>
     </div>
   </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= MY ORDERS SECTION END// ========================= -->
 
 {% endblock %}

@@ -1,0 +1,202 @@
+[
+    {
+        "model": "category.category",
+        "pk": 1,
+        "fields": {
+            "category_name": "Electronics",
+            "slug": "electronics",
+            "description": "Smartphones, laptops, cameras, and electronic accessories.",
+            "cat_image": "photos/categories/electronics.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 2,
+        "fields": {
+            "category_name": "Fashion",
+            "slug": "fashion",
+            "description": "Men's and women's clothing, footwear, and accessories.",
+            "cat_image": "photos/categories/fashion.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 3,
+        "fields": {
+            "category_name": "Home & Kitchen",
+            "slug": "home-kitchen",
+            "description": "Furniture, kitchen appliances, and home essentials.",
+            "cat_image": "photos/categories/home_kitchen.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 4,
+        "fields": {
+            "category_name": "Books",
+            "slug": "books",
+            "description": "Educational, fiction, and non-fiction books.",
+            "cat_image": "photos/categories/books.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 5,
+        "fields": {
+            "category_name": "Beauty & Personal Care",
+            "slug": "beauty-personal-care",
+            "description": "Skincare, makeup, perfumes, and grooming products.",
+            "cat_image": "photos/categories/beauty.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 6,
+        "fields": {
+            "category_name": "Sports & Outdoors",
+            "slug": "sports-outdoors",
+            "description": "Fitness equipment and outdoor accessories.",
+            "cat_image": "photos/categories/sports.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 7,
+        "fields": {
+            "category_name": "Grocery",
+            "slug": "grocery",
+            "description": "Daily groceries, beverages, and snacks.",
+            "cat_image": "photos/categories/grocery.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 8,
+        "fields": {
+            "category_name": "Toys & Games",
+            "slug": "toys-games",
+            "description": "Educational toys, puzzles, and games.",
+            "cat_image": "photos/categories/toys.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 9,
+        "fields": {
+            "category_name": "Furniture",
+            "slug": "furniture",
+            "description": "Beds, sofas, tables, and office furniture.",
+            "cat_image": "photos/categories/furniture.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 10,
+        "fields": {
+            "category_name": "Watches",
+            "slug": "watches",
+            "description": "Luxury, casual, and smart watches.",
+            "cat_image": "photos/categories/watches.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 11,
+        "fields": {
+            "category_name": "Jewelry",
+            "slug": "jewelry",
+            "description": "Gold, silver, diamond, and fashion jewelry.",
+            "cat_image": "photos/categories/jewelry.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 12,
+        "fields": {
+            "category_name": "Health & Wellness",
+            "slug": "health-wellness",
+            "description": "Health care products and wellness essentials.",
+            "cat_image": "photos/categories/health.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 13,
+        "fields": {
+            "category_name": "Pet Supplies",
+            "slug": "pet-supplies",
+            "description": "Food, toys, and accessories for pets.",
+            "cat_image": "photos/categories/pets.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 14,
+        "fields": {
+            "category_name": "Baby Products",
+            "slug": "baby-products",
+            "description": "Baby clothing, diapers, toys, and care products.",
+            "cat_image": "photos/categories/baby.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 15,
+        "fields": {
+            "category_name": "Office Supplies",
+            "slug": "office-supplies",
+            "description": "Office stationery and work essentials.",
+            "cat_image": "photos/categories/office.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 16,
+        "fields": {
+            "category_name": "Automotive",
+            "slug": "automotive",
+            "description": "Car accessories, tools, and maintenance products.",
+            "cat_image": "photos/categories/automotive.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 17,
+        "fields": {
+            "category_name": "Garden & Outdoor",
+            "slug": "garden-outdoor",
+            "description": "Gardening tools and outdoor living products.",
+            "cat_image": "photos/categories/garden.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 18,
+        "fields": {
+            "category_name": "Musical Instruments",
+            "slug": "musical-instruments",
+            "description": "Guitars, keyboards, drums, and accessories.",
+            "cat_image": "photos/categories/music.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 19,
+        "fields": {
+            "category_name": "Gaming",
+            "slug": "gaming",
+            "description": "Gaming consoles, accessories, and video games.",
+            "cat_image": "photos/categories/gaming.jpg"
+        }
+    },
+    {
+        "model": "category.category",
+        "pk": 20,
+        "fields": {
+            "category_name": "Travel & Luggage",
+            "slug": "travel-luggage",
+            "description": "Suitcases, backpacks, and travel accessories.",
+            "cat_image": "photos/categories/travel.jpg"
+        }
+    }
+]

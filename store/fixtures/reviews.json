@@ -1,0 +1,77 @@
+[
+    {
+        "model": "store.reviewrating",
+        "pk": 1,
+        "fields": {
+            "product": 1,
+            "user": 1,
+            "subject": "Excellent phone",
+            "review": "The camera quality and performance are amazing.",
+            "rating": 5.0,
+            "ip": "192.168.1.10",
+            "is_active": true,
+            "created_at": "2026-07-11T10:00:00Z",
+            "updated_at": "2026-07-11T10:00:00Z"
+        }
+    },
+    {
+        "model": "store.reviewrating",
+        "pk": 2,
+        "fields": {
+            "product": 1,
+            "user": 2,
+            "subject": "Good product",
+            "review": "Battery life is very good.",
+            "rating": 4.5,
+            "ip": "192.168.1.11",
+            "is_active": true,
+            "created_at": "2026-07-11T11:00:00Z",
+            "updated_at": "2026-07-11T11:00:00Z"
+        }
+    },
+    {
+        "model": "store.reviewrating",
+        "pk": 3,
+        "fields": {
+            "product": 2,
+            "user": 3,
+            "subject": "Nice quality",
+            "review": "Comfortable and fits perfectly.",
+            "rating": 4.0,
+            "ip": "192.168.1.12",
+            "is_active": true,
+            "created_at": "2026-07-11T12:00:00Z",
+            "updated_at": "2026-07-11T12:00:00Z"
+        }
+    },
+    {
+        "model": "store.reviewrating",
+        "pk": 4,
+        "fields": {
+            "product": 3,
+            "user": 4,
+            "subject": "Very useful",
+            "review": "Good quality kitchen product.",
+            "rating": 5.0,
+            "ip": "192.168.1.13",
+            "is_active": true,
+            "created_at": "2026-07-11T13:00:00Z",
+            "updated_at": "2026-07-11T13:00:00Z"
+        }
+    },
+    {
+        "model": "store.reviewrating",
+        "pk": 5,
+        "fields": {
+            "product": 10,
+            "user": 5,
+            "subject": "Amazing watch",
+            "review": "Great design and features.",
+            "rating": 4.8,
+            "ip": "192.168.1.14",
+            "is_active": true,
+            "created_at": "2026-07-11T14:00:00Z",
+            "updated_at": "2026-07-11T14:00:00Z"
+        }
+    }
+]

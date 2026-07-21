@@ -1,0 +1,92 @@
+[
+    {
+        "model": "accounts.account",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$dummyhash1",
+            "last_login": "2026-07-11T10:00:00Z",
+            "first_name": "John",
+            "last_name": "Smith",
+            "username": "johnsmith",
+            "email": "john@example.com",
+            "phone_number": "0501234567",
+            "date_joined": "2026-07-01T10:00:00Z",
+            "is_staff": false,
+            "is_admin": false,
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "accounts.account",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$dummyhash2",
+            "last_login": "2026-07-11T10:00:00Z",
+            "first_name": "Sarah",
+            "last_name": "Williams",
+            "username": "sarahw",
+            "email": "sarah@example.com",
+            "phone_number": "0502345678",
+            "date_joined": "2026-07-02T10:00:00Z",
+            "is_staff": false,
+            "is_admin": false,
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "accounts.account",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$dummyhash3",
+            "last_login": "2026-07-11T10:00:00Z",
+            "first_name": "Michael",
+            "last_name": "Brown",
+            "username": "michaelb",
+            "email": "michael@example.com",
+            "phone_number": "0503456789",
+            "date_joined": "2026-07-03T10:00:00Z",
+            "is_staff": false,
+            "is_admin": false,
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "accounts.account",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$dummyhash4",
+            "last_login": "2026-07-11T10:00:00Z",
+            "first_name": "Emma",
+            "last_name": "Davis",
+            "username": "emmad",
+            "email": "emma@example.com",
+            "phone_number": "0504567890",
+            "date_joined": "2026-07-04T10:00:00Z",
+            "is_staff": false,
+            "is_admin": false,
+            "is_active": true,
+            "is_superuser": false
+        }
+    },
+    {
+        "model": "accounts.account",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$720000$dummyhash5",
+            "last_login": "2026-07-11T10:00:00Z",
+            "first_name": "David",
+            "last_name": "Wilson",
+            "username": "davidw",
+            "email": "david@example.com",
+            "phone_number": "0505678901",
+            "date_joined": "2026-07-05T10:00:00Z",
+            "is_staff": false,
+            "is_admin": false,
+            "is_active": true,
+            "is_superuser": false
+        }
+    }
+]

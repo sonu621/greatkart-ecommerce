@@ -1,11 +1,208 @@
 {% if messages %}
     {% for message in messages %}
-    <div id="message" class="container">
-        <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error: {% endif %}
-            {{ message }}
+    <div id="message" class="fixed top-4 right-4 z-50 w-full max-w-sm animate-slide-in">
+        <div class="relative rounded-2xl shadow-2xl shadow-slate-200/50 p-4 border backdrop-blur-sm 
+            {% if message.tags == 'success' %}
+                bg-green-50/95 border-green-200 text-green-800
+            {% elif message.tags == 'error' %}
+                bg-red-50/95 border-red-200 text-red-800
+            {% elif message.tags == 'warning' %}
+                bg-amber-50/95 border-amber-200 text-amber-800
+            elif message.tags == 'info'
+                bg-blue-50/95 border-blue-200 text-blue-800
+            {% else %}
+                bg-slate-50/95 border-slate-200 text-slate-800
+            {% endif %}
+            transition-all duration-300 hover:shadow-xl"
+            role="alert">
+            
+            <!-- Close Button -->
+            <button type="button" 
+                    class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 transition-colors duration-200"
+                    onclick="this.parentElement.parentElement.remove()">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <div class="flex items-start gap-3 pr-8">
+                <!-- Icon -->
+                <div class="flex-shrink-0 mt-0.5">
+                    {% if message.tags == 'success' %}
+                        <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                    {% elif message.tags == 'error' %}
+                        <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                        </svg>
+                    {% elif message.tags == 'warning' %}
+                        <svg class="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                    {% elif message.tags == 'info' %}
+                        <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                    {% else %}
+                        <svg class="w-5 h-5 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                        </svg>
+                    {% endif %}
+                </div>
+
+                <!-- Message Content -->
+                <div class="flex-1 min-w-0">
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                        <span class="text-sm font-semibold block">Error:</span>
+                    {% endif %}
+                    <p class="text-sm font-medium leading-relaxed">{{ message }}</p>
+                </div>
+            </div>
+
+            <!-- Progress Bar (Auto dismiss) -->
+            <div class="absolute bottom-0 left-0 right-0 h-1 overflow-hidden rounded-b-2xl">
+                <div class="h-full rounded-b-2xl transition-all duration-300 ease-linear
+                    {% if message.tags == 'success' %}
+                        bg-green-400
+                    {% elif message.tags == 'error' %}
+                        bg-red-400
+                    {% elif message.tags == 'warning' %}
+                        bg-amber-400
+                    elif message.tags == 'info'
+                        bg-blue-400
+                    {% else %}
+                        bg-slate-400
+                    {% endif %}"
+                    style="width: 100%">
+                </div>
+            </div>
         </div>
     </div>
     {% endfor %}
 {% endif %}
+
+<!-- Custom CSS for animations -->
+<style>
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(100px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+    }
+    
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100px) scale(0.95);
+        }
+    }
+    
+    .animate-slide-in {
+        animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    .animate-slide-out {
+        animation: slideOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+</style>
+
+<!-- JavaScript for auto-dismiss and progress bar -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const messages = document.querySelectorAll('#message');
+        
+        messages.forEach(function(message) {
+            // Get the progress bar
+            const progressBar = message.querySelector('.h-full');
+            
+            // Auto dismiss after 5 seconds
+            setTimeout(function() {
+                // Start progress bar animation
+                if (progressBar) {
+                    progressBar.style.width = '0%';
+                    progressBar.style.transition = 'width 3s linear';
+                }
+                
+                // Slide out and remove after animation
+                setTimeout(function() {
+                    message.classList.remove('animate-slide-in');
+                    message.classList.add('animate-slide-out');
+                    setTimeout(function() {
+                        message.remove();
+                    }, 300);
+                }, 3000);
+            }, 2000);
+        });
+    });
+</script>
+
+<!-- Alternative: Simple inline alert (for use anywhere) -->
+<div class="container mx-auto px-4">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="mb-4">
+                <div class="rounded-xl p-4 border shadow-sm
+                    {% if message.tags == 'success' %}
+                        bg-green-50 border-green-200 text-green-800
+                    {% elif message.tags == 'error' %}
+                        bg-red-50 border-red-200 text-red-800
+                    {% elif message.tags == 'warning' %}
+                        bg-amber-50 border-amber-200 text-amber-800
+                    elif message.tags == 'info'
+                        bg-blue-50 border-blue-200 text-blue-800
+                    {% else %}
+                        bg-slate-50 border-slate-200 text-slate-800
+                    {% endif %}">
+                    <div class="flex items-center gap-3">
+                        <!-- Icon -->
+                        <div class="flex-shrink-0">
+                            {% if message.tags == 'success' %}
+                                <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                            {% elif message.tags == 'error' %}
+                                <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                                </svg>
+                            {% elif message.tags == 'warning' %}
+                                <svg class="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                                </svg>
+                            {% else %}
+                                <svg class="w-5 h-5 text-slate-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                </svg>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Message -->
+                        <div class="flex-1">
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                <span class="text-sm font-semibold">Error: </span>
+                            {% endif %}
+                            <span class="text-sm">{{ message }}</span>
+                        </div>
+                        
+                        <!-- Close Button -->
+                        <button type="button" 
+                                class="text-slate-400 hover:text-slate-600 transition-colors duration-200"
+                                onclick="this.closest('.rounded-xl').remove()">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>

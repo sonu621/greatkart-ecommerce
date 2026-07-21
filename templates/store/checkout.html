@@ -1,150 +1,261 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %}Checkout Page{% endblock %} 
+{% block title %}Checkout Page{% endblock %}
 
 {% block content %}
-
 {% load static %}
 
-<section class="section-content padding-y bg">
-  <div class="container">
-    <!-- ============================ COMPONENT 1 ================================= -->
-    <div class="row">
-      <aside class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title mb-4">Billing Address</h4>
-                <form action="{% url 'place_order' %}" method="POST">
-                    {% csrf_token %}
-                    <div class="form-row">
-                      <div class="col form-group">
-                          <label>First Name</label>
-                          <input type="text" class="form-control" name="first_name" id="first_name" required>
-                      </div>
+<!-- ========================= CHECKOUT SECTION ========================= -->
+<section class="py-8 md:py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 flex items-center gap-3">
+        <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Checkout</span>
+        <span class="text-sm font-medium bg-indigo-100 text-indigo-600 px-3 py-1 rounded-full">{{ cart_items|length }} items</span>
+      </h1>
+      <p class="text-slate-500 mt-1">Complete your order details below</p>
+    </div>
 
-                      <div class="col form-group">
-                          <label>Last Name</label>
-                          <input type="text" class="form-control" name="last_name" id="last_name" required>
-                      </div>
-                    </div>
+    <!-- Checkout Steps Progress -->
+    <div class="mb-8 flex items-center justify-center gap-2 md:gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-bold">1</span>
+        <span class="text-sm font-medium text-indigo-600">Cart</span>
+      </div>
+      <div class="w-12 md:w-20 h-0.5 bg-indigo-600"></div>
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-sm font-bold">2</span>
+        <span class="text-sm font-medium text-indigo-600">Checkout</span>
+      </div>
+      <div class="w-12 md:w-20 h-0.5 bg-slate-200"></div>
+      <div class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-sm font-bold">3</span>
+        <span class="text-sm font-medium text-slate-400">Payment</span>
+      </div>
+    </div>
 
-                    <div class="form-row">
-                        <div class="col form-group">
-                            <label>Phone Number</label>
-                            <input type="text" class="form-control" name="phone" id="phone" required>
-                        </div>
+    <form action="{% url 'place_order' %}" method="POST">
+      {% csrf_token %}
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Billing Address -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden">
+            <div class="p-6 md:p-8">
+              <h4 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                Billing Address
+              </h4>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- First Name -->
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">First Name</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="first_name" id="first_name" placeholder="John" required>
+                </div>
 
-                        <div class="col form-group">
-                            <label>Email</label>
-                            <input type="email" class="form-control" name="email" id="email" required>
-                        </div>
-                    </div>
+                <!-- Last Name -->
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Last Name</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="last_name" id="last_name" placeholder="Doe" required>
+                </div>
 
-                    <div class="form-row">
-                        <div class="col form-group">
-                            <label>Address Line 1</label>
-                            <input type="text" class="form-control" name="address_line_1" id="address_line_1" required>
-                        </div>   
-                    </div>
+                <!-- Phone -->
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Phone Number</label>
+                  <input type="tel" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="phone" id="phone" placeholder="+91 98765 43210" required>
+                </div>
 
-                    <div class="form-row">
-                      <div class="col form-group">
-                            <label>Address Line 2</label>
-                            <input type="text" class="form-control" name="address_line_2" id="address_line_2">
-                        </div>
+                <!-- Email -->
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
+                  <input type="email" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="email" id="email" placeholder="john@example.com" required>
+                </div>
 
-                        <div class="col form-group">
-                            <label>PIN Code</label>
-                            <input type="text" class="form-control" name="pin_code" id="pin_code" required>
-                        </div>
-                    </div>
+                <!-- Address Line 1 -->
+                <div class="md:col-span-2">
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Address Line 1</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="address_line_1" id="address_line_1" placeholder="123 Main Street" required>
+                </div>
 
-                    <div class="form-row">
-                        <div class="col form-group">
-                            <label>City</label>
-                            <input type="text" class="form-control" name="city" id="city" required>
-                        </div>
+                <!-- Address Line 2 -->
+                <div class="md:col-span-1">
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Address Line 2</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="address_line_2" id="address_line_2" placeholder="Apartment, Suite, etc.">
+                </div>
 
-                        <div class="col form-group">
-                            <label>State</label>
-                            <input type="text" class="form-control" name="state" id="state" required>
-                        </div>
+                <!-- PIN Code -->
+                <div class="md:col-span-1">
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">PIN Code</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="pin_code" id="pin_code" placeholder="110001" required>
+                </div>
 
-                        <div class="col form-group">
-                            <label>Country</label>
-                            <input type="text" class="form-control" name="country" id="country" required>
-                        </div>
-                    </div>
+                <!-- City -->
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">City</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="city" id="city" placeholder="Mumbai" required>
+                </div>
 
-                    <div class="form-row">
-                        <label>Order Note</label>
-                        <textarea name="order_note" id="order_note" rows="2" class="form-control"></textarea>
-                    </div>
+                <!-- State -->
+                <div>
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">State</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="state" id="state" placeholder="Maharashtra" required>
+                </div>
+
+                <!-- Country -->
+                <div class="md:col-span-2">
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Country</label>
+                  <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="country" id="country" placeholder="India" required>
+                </div>
+
+                <!-- Order Note -->
+                <div class="md:col-span-2">
+                  <label class="block text-sm font-semibold text-slate-700 mb-1.5">Order Note</label>
+                  <textarea class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-y min-h-[80px]" name="order_note" id="order_note" rows="2" placeholder="Any special instructions for delivery..."></textarea>
+                </div>
               </div>
-        </div>
-      </aside>
-      <aside class="col-lg-6">
-        <div class="card">
-          <table class="table table-borderless table-shopping-cart">
-            <thead class="text-muted">
-              <tr class="small text-uppercase">
-                <th scope="col">Product</th>
-                <th scope="col" width="120">Quantity</th>
-                <th scope="col" width="120">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for cart_item in cart_items %}
-              <tr>
-                <td>
-                  <figure class="itemside align-items-center">
-                    <div class="aside">
-                      <img
-                        src="{{ cart_item.product.images.url }}"
-                        class="img-sm"
-                      />
-                    </div>
-                    <figcaption class="info">
-                      <a
-                        href="{{ cart_item.product.get_url }}"
-                        class="title text-dark"
-                        >{{ cart_item.product.product_name }}</a
-                      >
-                      <p class="text-muted small">
-                        {% if cart_item.variations.all %}
-                        {% for item in cart_item.variations.all %}
-                        {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }}
-                        <br />
-                        {% endfor %} 
-                        {% endif %}
-                      </p>
-                    </figcaption>
-                  </figure>
-                </td>
-                <td>
-                  <label for="">{{ cart_item.quantity }}</label>
-                </td>
-                <td>
-                  <div class="price-wrap">
-                    <var class="price">₹ {{ cart_item.sub_total }}</var>
-                    <small class="text-muted">₹ {{ cart_item.product.price }} each</small>
-                  </div>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <div class="card-body">
-            <button type="submit" name="submit" class="btn btn-primary btn-block">Place order</button>
-            <a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
+            </div>
           </div>
         </div>
-      </aside>
-      </form>
-    </div>
-    <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+        <!-- Order Summary -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden sticky top-4">
+            
+            <!-- Order Items -->
+            <div class="p-6 border-b border-slate-100">
+              <h5 class="text-sm font-bold text-slate-700 mb-4 flex items-center gap-2">
+                <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                </svg>
+                Order Items
+              </h5>
+              
+              <div class="space-y-4 max-h-[300px] overflow-y-auto custom-scrollbar pr-2">
+                {% for cart_item in cart_items %}
+                  <div class="flex items-start gap-3 p-2 rounded-xl hover:bg-slate-50 transition-all duration-200">
+                    <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-slate-50 to-indigo-50/30 rounded-xl overflow-hidden border border-slate-100">
+                      <img src="{{ cart_item.product.images.url }}" class="w-full h-full object-contain p-1" alt="{{ cart_item.product.product_name }}">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-semibold text-slate-800 truncate">{{ cart_item.product.product_name }}</p>
+                      {% if cart_item.variations.all %}
+                        <div class="flex flex-wrap gap-1 mt-0.5">
+                          {% for item in cart_item.variations.all %}
+                            <span class="text-[0.5rem] font-medium bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full">
+                              {{ item.variation_category|capfirst }}: {{ item.variation_value|capfirst }}
+                            </span>
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                      <div class="flex items-center gap-2 mt-1">
+                        <span class="text-xs font-medium text-slate-500">Qty: {{ cart_item.quantity }}</span>
+                        <span class="text-xs font-bold text-slate-800">₹ {{ cart_item.sub_total }}</span>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Price Summary -->
+            <div class="p-6 border-b border-slate-100">
+              <h5 class="text-sm font-bold text-slate-700 mb-4">Price Summary</h5>
+              <div class="space-y-2">
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">Subtotal</span>
+                  <span class="font-medium text-slate-700">₹ {{ total }}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">Tax</span>
+                  <span class="font-medium text-slate-700">₹ {{ tax }}</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-slate-500">Shipping</span>
+                  <span class="font-medium text-green-600">Free</span>
+                </div>
+              </div>
+              
+              <div class="border-t border-slate-200 pt-3 mt-3">
+                <div class="flex justify-between">
+                  <span class="text-base font-bold text-slate-800">Grand Total</span>
+                  <span class="text-xl font-extrabold text-indigo-600">₹ {{ grand_total }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="p-6">
+              <button type="submit" name="submit" class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg shadow-indigo-200/50 hover:shadow-indigo-300/60 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5">
+                <span>Place Order</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+              <a href="{% url 'store' %}" class="w-full mt-3 inline-flex items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium px-6 py-3.5 rounded-2xl border border-slate-200 transition-all duration-200">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                Continue Shopping
+              </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="px-6 pb-6">
+              <div class="flex flex-wrap items-center justify-center gap-3 text-[0.6rem] text-slate-400 border-t border-slate-100 pt-4">
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  Secure Checkout
+                </span>
+                <span class="w-px h-3 bg-slate-200"></span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  SSL Encrypted
+                </span>
+                <span class="w-px h-3 bg-slate-200"></span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  Secure Payment
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </form>
   </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= CHECKOUT SECTION END// ========================= -->
+
+<!-- Custom Scrollbar Styles -->
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+</style>
 
 {% endblock %}

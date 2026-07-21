@@ -1,0 +1,26 @@
+[
+    {
+    "model": "store.productgallery",
+    "pk": 3,
+    "fields": {
+        "product": 1,
+        "image": "store/products/iphone16pro_3.jpg"
+    }
+},
+{
+    "model": "store.productgallery",
+    "pk": 4,
+    "fields": {
+        "product": 1,
+        "image": "store/products/iphone16pro_4.jpg"
+    }
+},
+{
+    "model": "store.productgallery",
+    "pk": 5,
+    "fields": {
+        "product": 1,
+        "image": "store/products/iphone16pro_5.jpg"
+    }
+}
+]

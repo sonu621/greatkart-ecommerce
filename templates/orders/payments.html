@@ -1,142 +1,198 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %}Payment Page{% endblock %} 
+{% block title %}Payment Page{% endblock %}
 
-{% block content %} 
-
+{% block content %}
 {% load static %}
 
-<section class="section-content padding-y bg">
-  <div class="container">
-    <h4 class="text-center mb-10">Review Your Order and Make Payment</h4>
-    <div class="row">
-      <aside class="col-lg-9">
-        <div class="card">
-          <div class="card-header"><strong>Billing Address</strong></div>
-          <div class="card-body">
-            <p class="card-text mb-0">{{ order.full_name }}</p>
-            <p class="card-text mb-0">{{ order.full_address }}</p>
-            <p class="card-text mb-0">{{ order.city }}, {{ order.state }}</p>
-            <p class="card-text mb-0">
-              {{ order.pin_code }}, {{ order.country }}
-            </p>
-            <p class="card-text mb-0">{{ order.email }}</p>
-            <p class="card-text mb-0">{{ order.phone }}</p>
+<!-- ========================= PAYMENT SECTION ========================= -->
+<section class="py-8 md:py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50/30 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <!-- Page Header -->
+    <div class="text-center mb-8">
+      <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800">
+        <span class="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Review Your Order</span>
+      </h2>
+      <p class="text-slate-500 text-sm mt-1">Complete your payment to finalize the purchase</p>
+    </div>
 
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Main Content -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Billing Address -->
+        <div class="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          <div class="px-6 py-4 bg-gradient-to-r from-slate-50/50 to-indigo-50/30 border-b border-slate-200">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              <h6 class="font-bold text-slate-700">Billing Address</h6>
+            </div>
+          </div>
+          <div class="p-6 space-y-1">
+            <p class="text-sm font-semibold text-slate-800">{{ order.full_name }}</p>
+            <p class="text-sm text-slate-600">{{ order.full_address }}</p>
+            <p class="text-sm text-slate-600">{{ order.city }}, {{ order.state }}</p>
+            <p class="text-sm text-slate-600">{{ order.pin_code }}, {{ order.country }}</p>
+            <p class="text-sm text-slate-600">{{ order.email }}</p>
+            <p class="text-sm text-slate-600">{{ order.phone }}</p>
             {% if order.order_note %}
-            <b>Order Note: </b> {{ order.order_note }} {% endif %}
+              <div class="mt-3 pt-3 border-t border-slate-100">
+                <p class="text-xs font-semibold text-slate-500">Order Note:</p>
+                <p class="text-sm text-slate-600">{{ order.order_note }}</p>
+              </div>
+            {% endif %}
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-header"><strong>Payment Method</strong></div>
-          <div class="card-body">
-            <p class="card-text">PayPal</p>
+        <!-- Payment Method -->
+        <div class="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          <div class="px-6 py-4 bg-gradient-to-r from-slate-50/50 to-indigo-50/30 border-b border-slate-200">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+              </svg>
+              <h6 class="font-bold text-slate-700">Payment Method</h6>
+            </div>
           </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header"><strong>Review Product</strong></div>
-          <div class="card-body">
-            <table class="table table-borderless table-shopping-cart">
-              <thead class="text-muted">
-                <tr class="small text-uppercase">
-                  <th scope="col">Product</th>
-                  <th scope="col" width="120">Quantity</th>
-                  <th scope="col" width="120">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for cart_item in cart_items %}
-                <tr>
-                  <td>
-                    <figure class="itemside align-items-center">
-                      <div class="aside">
-                        <img
-                          src="{{ cart_item.product.images.url }}"
-                          class="img-sm"
-                        />
-                      </div>
-                      <figcaption class="info">
-                        <a
-                          href="{{ cart_item.product.get_url }}"
-                          class="title text-dark"
-                          >{{ cart_item.product.product_name }}</a
-                        >
-                        <p class="text-muted small">
-                          {% if cart_item.variations.all %} 
-                          {% for item in cart_item.variations.all %} 
-                          {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }}
-                          <br />
-                          {% endfor %} 
-                          {% endif %}
-                        </p>
-                      </figcaption>
-                    </figure>
-                  </td>
-                  <td>
-                    <label for="">{{ cart_item.quantity }}</label>
-                  </td>
-                  <td>
-                    <div class="price-wrap">
-                      <var class="price">₹ {{ cart_item.sub_total }}</var>
-                      <small class="text-muted"
-                        >₹ {{ cart_item.product.price }} each</small
-                      >
-                    </div>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </aside>
-      <aside class="col-lg-3">
-        <div class="card">
-          <div class="card-body">
-            <dl class="dlist-align">
-              <dt>Total price:</dt>
-              <dd class="text-right">₹ {{ total }}</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Total Tax:</dt>
-              <dd class="text-right">₹ {{ tax }}</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Grand Total:</dt>
-              <dd class="text-right text-dark b">
-                <strong>₹ {{ grand_total }}</strong>
-              </dd>
-            </dl>
-            <hr />
-            <p class="text-center mb-3">
-              <img
-                src="{% static './images/misc/payments.png' %}"
-                height="26"
-              />
-            </p>
-            <!-- Set up a container element for the button -->
-            <div id="paypal-button-container">
-              <!-- Paypal button will load -->
+          <div class="p-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+                </svg>
+              </div>
+              <span class="text-sm font-semibold text-slate-700">PayPal</span>
+              <span class="text-xs text-slate-400">(Secure Payment)</span>
             </div>
           </div>
         </div>
-      </aside>
+
+        <!-- Review Products -->
+        <div class="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden">
+          <div class="px-6 py-4 bg-gradient-to-r from-slate-50/50 to-indigo-50/30 border-b border-slate-200">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              </svg>
+              <h6 class="font-bold text-slate-700">Review Products</h6>
+            </div>
+          </div>
+          <div class="p-6">
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-slate-200">
+                    <th class="text-left py-2 font-semibold text-slate-600 text-xs uppercase tracking-wider">Product</th>
+                    <th class="text-center py-2 font-semibold text-slate-600 text-xs uppercase tracking-wider">Qty</th>
+                    <th class="text-right py-2 font-semibold text-slate-600 text-xs uppercase tracking-wider">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for cart_item in cart_items %}
+                  <tr class="border-b border-slate-100">
+                    <td class="py-3">
+                      <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-slate-50 to-indigo-50/30 rounded-xl overflow-hidden border border-slate-100 flex-shrink-0">
+                          <img src="{{ cart_item.product.images.url }}" class="w-full h-full object-contain p-1" alt="{{ cart_item.product.product_name }}">
+                        </div>
+                        <div>
+                          <p class="font-semibold text-slate-800 text-sm">{{ cart_item.product.product_name }}</p>
+                          {% if cart_item.variations.all %}
+                            <div class="flex flex-wrap gap-1 mt-0.5">
+                              {% for item in cart_item.variations.all %}
+                                <span class="text-[0.5rem] font-medium bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-full">
+                                  {{ item.variation_category|capfirst }}: {{ item.variation_value|capfirst }}
+                                </span>
+                              {% endfor %}
+                            </div>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center py-3">
+                      <span class="inline-flex items-center justify-center w-8 h-8 bg-indigo-50 text-indigo-600 font-bold rounded-lg text-sm">
+                        {{ cart_item.quantity }}
+                      </span>
+                    </td>
+                    <td class="text-right py-3">
+                      <div>
+                        <p class="font-bold text-slate-800">₹ {{ cart_item.sub_total }}</p>
+                        <p class="text-xs text-slate-400">₹ {{ cart_item.product.price }} each</p>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary Sidebar -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 overflow-hidden sticky top-4">
+          <div class="p-6">
+            <h6 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Order Summary</h6>
+            
+            <div class="space-y-3">
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Subtotal</span>
+                <span class="font-medium text-slate-700">₹ {{ total }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Tax</span>
+                <span class="font-medium text-slate-700">₹ {{ tax }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Shipping</span>
+                <span class="font-medium text-green-600">Free</span>
+              </div>
+            </div>
+
+            <div class="border-t border-slate-200 pt-4 mt-4">
+              <div class="flex justify-between">
+                <span class="text-base font-bold text-slate-800">Grand Total</span>
+                <span class="text-xl font-extrabold text-indigo-600">₹ {{ grand_total }}</span>
+              </div>
+            </div>
+
+            <!-- Payment Methods Image -->
+            <div class="mt-4 pt-4 border-t border-slate-200">
+              <p class="text-xs text-slate-400 text-center mb-2">Secure payment methods</p>
+              <div class="flex justify-center gap-2">
+                <img src="{% static './images/misc/payments.png' %}" class="h-8 object-contain" alt="Payment methods">
+              </div>
+            </div>
+
+            <!-- PayPal Button Container -->
+            <div id="paypal-button-container" class="mt-4 pt-4 border-t border-slate-200"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<!-- ========================= PAYMENT SECTION END// ========================= -->
+
+<!-- Fixed PayPal Script -->
+<script src="https://www.paypal.com/sdk/js?client-id={{ paypal_client_id }}&currency=USD"></script>
 
 <script>
-  // using jQuery
+  // CSRF Token function
   function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie != '') {
           var cookies = document.cookie.split(';');
           for (var i = 0; i < cookies.length; i++) {
-              var cookie = jQuery.trim(cookies[i]);
-              // Does this cookie string begin with the name we want?
+              var cookie = cookies[i].trim();
               if (cookie.substring(0, name.length + 1) == (name + '=')) {
                   cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                   break;
@@ -146,62 +202,86 @@
       return cookieValue;
   }
 
+  // Get the grand total and format it properly
+  var grandTotal = "{{ grand_total }}";
+  
+  // Ensure the amount is a valid number with 2 decimal places
+  var amount = parseFloat(grandTotal).toFixed(2);
+  
+  // PayPal button configuration
+  paypal.Buttons({
+      style: {
+          color: "blue",
+          shape: "rect",
+          label: "pay",
+          height: 45,
+          layout: "vertical"
+      },
 
-const amount = "{{ grand_total }}";
-const url = "{% url 'payments' %}";
-const orderId = "{{ order.order_number }}";
-const payment_method = "PayPal";
-const csrftoken = getCookie('csrftoken');
-const redirect_url = "{% url 'order_complete' %}"
+      createOrder: function(data, actions) {
+          return actions.order.create({
+              purchase_units: [{
+                  amount: {
+                      value: amount,
+                      currency_code: "USD"
+                  },
+                  description: "Order #{{ order.order_number }}"
+              }],
+              application_context: {
+                  shipping_preference: "NO_SHIPPING"
+              }
+          });
+      },
 
-paypal.Buttons({
+      onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+              console.log('Payment captured:', details);
+              
+              var url = "{% url 'payments' %}";
+              var orderId = "{{ order.order_number }}";
+              var payment_method = "PayPal";
+              var csrftoken = getCookie('csrftoken');
+              var redirect_url = "{% url 'order_complete' %}";
 
-    style: {
-        color: "blue",
-        shape: "rect",
-        label: "pay",
-        height: 40,
-    },
-
-    createOrder: function(data, actions) {
-        return actions.order.create({
-            purchase_units: [{
-                amount: {
-                    value: amount
-                }
-            }]
-        });
-    },
-
-    onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-
-            console.log(details);
-
-           sendData();
-           function sendData(){
               fetch(url, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  "X-CSRFToken": csrftoken,
-                },
-                body: JSON.stringify({
-                  orderId: orderId,
-                  transId: details.id,
-                  payment_method: payment_method,
-                  status: details.status
-              }),
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                      "X-CSRFToken": csrftoken,
+                  },
+                  body: JSON.stringify({
+                      orderId: orderId,
+                      transId: details.id,
+                      payment_method: payment_method,
+                      status: details.status
+                  }),
               })
-              .then((response) => response.json())
-              .then((data) => {
-                window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transId;
+              .then(function(response) {
+                  return response.json();
+              })
+              .then(function(data) {
+                  console.log('Payment success:', data);
+                  window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transId;
+              })
+              .catch(function(error) {
+                  console.error('Error:', error);
+                  alert('There was an error processing your payment. Please try again.');
               });
-           }
+          });
+      },
 
-        });
-    }
+      onCancel: function(data) {
+          console.log('Payment cancelled:', data);
+          // Optional: Show a message to the user
+          alert('Payment was cancelled. You can try again when ready.');
+      },
 
-}).render('#paypal-button-container');
+      onError: function(err) {
+          console.error('PayPal Error:', err);
+          alert('There was an error with PayPal. Please try again or use another payment method.');
+      }
+
+  }).render('#paypal-button-container');
 </script>
+
 {% endblock %}

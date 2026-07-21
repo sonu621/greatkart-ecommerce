@@ -1,0 +1,222 @@
+[
+    {
+        "model": "store.variation",
+        "pk": 1,
+        "fields": {
+            "product": 1,
+            "variation_category": "color",
+            "variation_value": "Black",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 2,
+        "fields": {
+            "product": 1,
+            "variation_category": "size",
+            "variation_value": "256GB",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 3,
+        "fields": {
+            "product": 2,
+            "variation_category": "color",
+            "variation_value": "Blue",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 4,
+        "fields": {
+            "product": 2,
+            "variation_category": "size",
+            "variation_value": "L",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 5,
+        "fields": {
+            "product": 3,
+            "variation_category": "color",
+            "variation_value": "Silver",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 6,
+        "fields": {
+            "product": 3,
+            "variation_category": "size",
+            "variation_value": "10 Pieces",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 7,
+        "fields": {
+            "product": 4,
+            "variation_category": "color",
+            "variation_value": "Standard",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 8,
+        "fields": {
+            "product": 4,
+            "variation_category": "size",
+            "variation_value": "Paperback",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 9,
+        "fields": {
+            "product": 5,
+            "variation_category": "color",
+            "variation_value": "Orange",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 10,
+        "fields": {
+            "product": 5,
+            "variation_category": "size",
+            "variation_value": "30ml",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 11,
+        "fields": {
+            "product": 6,
+            "variation_category": "color",
+            "variation_value": "Black",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 12,
+        "fields": {
+            "product": 6,
+            "variation_category": "size",
+            "variation_value": "20kg",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 13,
+        "fields": {
+            "product": 7,
+            "variation_category": "color",
+            "variation_value": "White",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 14,
+        "fields": {
+            "product": 7,
+            "variation_category": "size",
+            "variation_value": "5kg",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 15,
+        "fields": {
+            "product": 8,
+            "variation_category": "color",
+            "variation_value": "Multi Color",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 16,
+        "fields": {
+            "product": 8,
+            "variation_category": "size",
+            "variation_value": "Large Box",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 17,
+        "fields": {
+            "product": 9,
+            "variation_category": "color",
+            "variation_value": "Brown",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 18,
+        "fields": {
+            "product": 9,
+            "variation_category": "size",
+            "variation_value": "120cm",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 19,
+        "fields": {
+            "product": 10,
+            "variation_category": "color",
+            "variation_value": "Silver",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    },
+    {
+        "model": "store.variation",
+        "pk": 20,
+        "fields": {
+            "product": 10,
+            "variation_category": "size",
+            "variation_value": "44mm",
+            "is_active": true,
+            "created_at": "2026-07-11"
+        }
+    }
+]

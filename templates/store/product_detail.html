@@ -1,349 +1,428 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
-{% block title %} Product Detail {% endblock %} 
+{% block title %}Product Detail{% endblock %}
 
-{%block content %} {% load static %}
+{% block content %}
+{% load static %}
 
-<section class="section-content padding-y bg">
-  <div class="container">
-    <!-- ============================ COMPONENT 1 ================================= -->
-    <div class="card">
-      <div class="row no-gutters">
-        <aside class="col-md-6">
-          <article class="gallery-wrap">
-            <div class="img-big-wrap">
-              <center><img id="mainImage" src="{{ single_product.images.url }}"></center>
+<!-- ========================= PRODUCT DETAIL SECTION ========================= -->
+<section class="py-8 md:py-12 bg-gradient-to-br from-slate-50 via-white to-indigo-50/30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex mb-6 text-sm" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="{% url 'home' %}" class="text-slate-500 hover:text-indigo-600 transition">Home</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <a href="{% url 'store' %}" class="text-slate-500 hover:text-indigo-600 transition ml-1 md:ml-2">Store</a>
           </div>
-
-          <ul class="thumb">
-
-              <!-- Main Product Image as First Thumbnail -->
-              <li>
-                  <img src="{{ single_product.images.url }}"
-                      alt="Main Product Image"
-                      onclick="document.getElementById('mainImage').src='{{ single_product.images.url }}'">
-              </li>
-
-              <!-- Gallery Images -->
-              {% for i in product_gallery %}
-              <li>
-                  <img src="{{ i.image.url }}"
-                      alt="Product Gallery Image"
-                      onclick="document.getElementById('mainImage').src='{{ i.image.url }}'">
-              </li>
-              {% endfor %}
-
-          </ul>
-        </aside>
-        <main class="col-md-6 border-left">
-          <form action="{% url 'add_cart' single_product.id %}" method="POST">
-            {% csrf_token %}
-            <article class="content-body">
-              <h2 class="title">{{ single_product.product_name }}</h2>
-
-			  <div class="rating-star">
-            {% with avg=single_product.averageReview %}
-
-            <span>
-              <i
-                class="fa {% if avg < 0.5 %}fa-star-o{% elif avg < 1 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 1.5 %}fa-star-o{% elif avg < 2 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 2.5 %}fa-star-o{% elif avg < 3 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 3.5 %}fa-star-o{% elif avg < 4 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 4.5 %}fa-star-o{% elif avg < 5 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-			  <span>{{ single_product.countReview}} reviews</span>
-            </span>
-
-            {% endwith %}
-        </div>
-              <div class="mb-3">
-                <var class="price h4">₹ {{ single_product.price }}</var>
-              </div>
-
-              <p>{{ single_product.description }}</p>
-
-              <hr />
-              <div class="row">
-                <div class="item-option-select">
-                  <h6>Choose Color</h6>
-                  <select name="color" class="form-control" required>
-                    <option value="" disabled selected>Select</option>
-                    {% for i in single_product.variation_set.colors %}
-                    <option value="{{ i.variation_value | lower }}" required>
-                      {{ i.variation_value | capfirst }}
-                    </option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="item-option-select">
-                  <h6>Select Size</h6>
-                  <select name="size" class="form-control">
-                    <option value="" disabled selected>Select</option>
-                    {% for i in single_product.variation_set.sizes %}
-                    <option value="{{ i.variation_value | lower }}">
-                      {{ i.variation_value | capfirst }}
-                    </option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </div>
-              <hr />
-
-              {% if single_product.stock <= 0 %}
-              <h5 class="text-danger">Out of stock</h5>
-              {% else %}
-              <button type="submit" class="btn btn-primary">
-                <span class="text">Add to Cart</span
-                ><i class="fas fa-shopping-cart"></i>
-              </button>
-              {% endif %}
-            </article>
-          </form>
-        </main>
-      </div>
-    </div>
-    <!-- ============================ COMPONENT 1 END .// ================================= -->
-
-    <br />
-
-    <div class="row">
-      <div class="col-md-9">
-        <form
-          action="{% url 'submit_review' single_product.id %}"
-          method="POST"
-        >
-          {% csrf_token %}
-
-          <h5>Write your review</h5>
-          <!-- Rating Start -->
-          <div><label>How do you rate this product?</label></div>
-
-          <br />
-          <div class="rate">
-            <input
-              type="radio"
-              name="rating"
-              id="rating10"
-              value="5"
-              required
-            /><label for="rating10" title="5"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating9"
-              value="4.5"
-              required
-            /><label for="rating9" title="4.5" class="half"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating8"
-              value="4"
-              required
-            /><label for="rating8" title="4"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating7"
-              value="3.5"
-              required
-            /><label for="rating7" title="3.5" class="half"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating6"
-              value="3"
-              required
-            /><label for="rating6" title="3"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating5"
-              value="2.5"
-              required
-            /><label for="rating5" title="2.5" class="half"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating4"
-              value="2"
-              required
-            /><label for="rating4" title="2"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating3"
-              value="1.5"
-              required
-            /><label for="rating3" title="1.5" class="half"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating2"
-              value="1"
-              required
-            /><label for="rating2" title="1"></label>
-            <input
-              type="radio"
-              name="rating"
-              id="rating1"
-              value="0.5"
-              required
-            /><label for="rating1" title="0.5" class="half"></label>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="odd"/>
+            </svg>
+            <span class="text-slate-700 font-medium ml-1 md:ml-2">{{ single_product.product_name|truncatechars:30 }}</span>
           </div>
-          <div>
-            Review Title:
-            <input type="text" class="form-control" name="subject" />
-            <br />
-            Review:
-            <textarea
-              class="form-control"
-              name="review"
-              row="4"
-              col="80"
-              id=""
-            ></textarea>
-            <br />
-            {% if user.is_authenticated %}
-            <input
-              class="btn btn-primary"
-              type="submit"
-              value="Submit Review"
-            />
+        </li>
+      </ol>
+    </nav>
+
+    <!-- Main Product Card -->
+    <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+        
+        <!-- Left Column - Images -->
+        <div class="p-6 md:p-8 bg-gradient-to-br from-slate-50 via-white to-indigo-50/20">
+          <!-- Main Image -->
+          <div class="relative bg-white rounded-2xl overflow-hidden shadow-lg shadow-indigo-100/30 mb-4">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-200/10 to-purple-200/10"></div>
+            <img id="mainImage" src="{{ single_product.images.url }}" class="w-full h-auto object-contain max-h-[450px] mx-auto p-4" alt="{{ single_product.product_name }}">
+            
+            <!-- Stock Badge -->
+            {% if single_product.stock > 0 %}
+              <div class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-green-500/30 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                In Stock
+              </div>
             {% else %}
-            <p>
-              You must be logged in to post the review.
-              <span><a href="{% url 'login' %}">login now</a></span>
-            </p>
+              <div class="absolute top-4 right-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-red-500/30">
+                Out of Stock
+              </div>
             {% endif %}
           </div>
 
-          {% include "includes/alerts.html" %}
-        </form>
-
-        <br />
-        <header class="section-heading">
-          <h3>Customer Reviews</h3>
-
-          <div class="rating-star">
-            {% with avg=single_product.averageReview %}
-
-            <span>
-				
-              <i
-                class="fa {% if avg < 0.5 %}fa-star-o{% elif avg < 1 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 1.5 %}fa-star-o{% elif avg < 2 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 2.5 %}fa-star-o{% elif avg < 3 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 3.5 %}fa-star-o{% elif avg < 4 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-            </span>
-
-            <span>
-              <i
-                class="fa {% if avg < 4.5 %}fa-star-o{% elif avg < 5 %}fa-star-half-o{% else %}fa-star{% endif %}"
-              ></i>
-			  <span>{{ single_product.countReview}} reviews</span>
-            </span>
-
-            {% endwith %}
+          <!-- Thumbnail Gallery -->
+          <div class="grid grid-cols-4 sm:grid-cols-5 gap-3">
+            <!-- Main Image Thumbnail -->
+            <div class="cursor-pointer rounded-xl overflow-hidden border-2 border-indigo-500 shadow-md shadow-indigo-100/30 transition-all hover:scale-105">
+              <img src="{{ single_product.images.url }}" class="w-full h-20 object-cover" onclick="document.getElementById('mainImage').src='{{ single_product.images.url }}'" alt="Main image">
+            </div>
+            
+            <!-- Gallery Images -->
+            {% for gallery in product_gallery %}
+              <div class="cursor-pointer rounded-xl overflow-hidden border-2 border-transparent hover:border-indigo-300 transition-all hover:scale-105">
+                <img src="{{ gallery.image.url }}" class="w-full h-20 object-cover" onclick="document.getElementById('mainImage').src='{{ gallery.image.url }}'" alt="Gallery image {{ forloop.counter }}">
+              </div>
+            {% empty %}
+              <div class="col-span-3 text-sm text-slate-400 flex items-center">
+                <span>No additional images</span>
+              </div>
+            {% endfor %}
           </div>
-        </header>
-        {% for review in reviews %}
-        <article class="box mb-3">
-          <div class="icontext w-100">
-            <img
-              src="{% static './images/avatars/avatar1.jpg' %}"
-              class="img-xs icon rounded-circle"
-            />
+        </div>
 
-            <div class="text">
-              <span class="date text-muted float-md-right"
-                >{{ review.created_at }}</span
-              >
-              <h6 class="mb-1">{{ review.user.full_name }}</h6>
-              <div class="rating-star">
-                <span
-                  ><i
-                    class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o{% endif %}"
-                    aria-hidden="true"
-                  ></i
-                ></span>
-                <span
-                  ><i
-                    class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o{% endif %}"
-                    aria-hidden="true"
-                  ></i
-                ></span>
-                <span
-                  ><i
-                    class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o{% endif %}"
-                    aria-hidden="true"
-                  ></i
-                ></span>
-                <span
-                  ><i
-                    class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o{% endif %}"
-                    aria-hidden="true"
-                  ></i
-                ></span>
-                <span
-                  ><i
-                    class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o{% endif %}"
-                    aria-hidden="true"
-                  ></i
-                ></span>
+        <!-- Right Column - Product Details -->
+        <div class="p-6 md:p-8 lg:border-l border-slate-100">
+          <form action="{% url 'add_cart' single_product.id %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="space-y-5">
+              <!-- Product Name -->
+              <h1 class="text-2xl md:text-3xl font-extrabold text-slate-800 leading-tight">
+                {{ single_product.product_name }}
+              </h1>
+
+              <!-- Category -->
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-medium text-slate-500">Category:</span>
+                <span class="text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">{{ single_product.category.category_name }}</span>
+              </div>
+
+              <!-- Rating -->
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-0.5 text-amber-400 text-sm">
+                  {% with avg=single_product.averageReview|default:0|floatformat:0 %}
+                    {% if avg >= "1" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                    {% if avg >= "2" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                    {% if avg >= "3" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                    {% if avg >= "4" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                    {% if avg >= "5" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                  {% endwith %}
+                </div>
+                <span class="text-sm font-medium text-slate-500">({{ single_product.countReview }} reviews)</span>
+              </div>
+
+              <!-- Price -->
+              <div class="flex items-baseline gap-3">
+                <span class="text-3xl md:text-4xl font-extrabold text-slate-900">₹ {{ single_product.price|floatformat:2 }}</span>
+                {% if single_product.stock > 0 %}
+                  <span class="text-sm text-slate-400 line-through">₹ {{ single_product.price|add:single_product.price|floatformat:2 }}</span>
+                  <span class="text-xs font-bold bg-green-100 text-green-700 px-2.5 py-1 rounded-full">SAVE</span>
+                {% endif %}
+              </div>
+
+              <!-- Stock Status -->
+              <div class="flex items-center gap-2">
+                {% if single_product.stock > 0 %}
+                  <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                  <span class="text-sm font-medium text-green-600">{{ single_product.stock }} units available</span>
+                {% else %}
+                  <span class="w-2 h-2 bg-red-400 rounded-full"></span>
+                  <span class="text-sm font-medium text-red-600">Out of stock</span>
+                {% endif %}
+              </div>
+
+              <!-- Description -->
+              <div class="border-t border-slate-100 pt-4">
+                <h3 class="text-sm font-semibold text-slate-700 mb-2">Description</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">{{ single_product.description }}</p>
+              </div>
+
+              <!-- Variations -->
+              <div class="space-y-4 border-t border-slate-100 pt-4">
+                <!-- Color Variation -->
+                {% with colors=single_product.variation_set.colors %}
+                  {% if colors %}
+                    <div>
+                      <h6 class="text-sm font-semibold text-slate-700 mb-2">Choose Color</h6>
+                      <select name="color" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm" required>
+                        <option value="" disabled selected>Select a color</option>
+                        {% for i in colors %}
+                          <option value="{{ i.variation_value|lower }}">{{ i.variation_value|capfirst }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% endif %}
+                {% endwith %}
+
+                <!-- Size Variation -->
+                {% with sizes=single_product.variation_set.sizes %}
+                  {% if sizes %}
+                    <div>
+                      <h6 class="text-sm font-semibold text-slate-700 mb-2">Select Size</h6>
+                      <select name="size" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm">
+                        <option value="" disabled selected>Select a size</option>
+                        {% for i in sizes %}
+                          <option value="{{ i.variation_value|lower }}">{{ i.variation_value|capfirst }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  {% endif %}
+                {% endwith %}
+              </div>
+
+              <!-- Add to Cart Button -->
+              <div class="pt-4 border-t border-slate-100">
+                {% if single_product.stock > 0 %}
+                  <button type="submit" class="w-full group inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold px-8 py-4 rounded-2xl shadow-lg shadow-indigo-200/50 hover:shadow-indigo-300/60 transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5">
+                    <span>Add to Cart</span>
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                  </button>
+                {% else %}
+                  <button disabled class="w-full bg-slate-300 text-slate-500 font-bold px-8 py-4 rounded-2xl cursor-not-allowed">
+                    Out of Stock
+                  </button>
+                {% endif %}
+              </div>
+
+              <!-- Trust Badges -->
+              <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                <span class="flex items-center gap-1.5 text-xs text-slate-500">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  Free Shipping
+                </span>
+                <span class="w-px h-4 bg-slate-200"></span>
+                <span class="flex items-center gap-1.5 text-xs text-slate-500">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  Secure Checkout
+                </span>
+                <span class="w-px h-4 bg-slate-200"></span>
+                <span class="flex items-center gap-1.5 text-xs text-slate-500">
+                  <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  100% Authentic
+                </span>
               </div>
             </div>
-          </div>
-          <!-- icontext.// -->
-          <div class="mt-3">
-            <h6>{{ review.subject }}</h6>
-            <p>{{ review.review }}</p>
-          </div>
-        </article>
-        {% endfor %}
+          </form>
+        </div>
       </div>
     </div>
+
+    <!-- ========================= REVIEWS SECTION ========================= -->
+    <div class="mt-12">
+      <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 p-6 md:p-8">
+        
+        <!-- Review Form -->
+        <div class="mb-10">
+          <h3 class="text-2xl font-bold text-slate-800 mb-6">Write Your Review</h3>
+          
+          <form action="{% url 'submit_review' single_product.id %}" method="POST" class="space-y-4">
+            {% csrf_token %}
+            
+            <!-- Rating - Fixed with proper star icons -->
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-3">How do you rate this product?</label>
+              <div class="flex items-center gap-1">
+                <input type="radio" name="rating" id="rating5" value="5" required class="hidden">
+                <label for="rating5" class="text-3xl cursor-pointer text-slate-300 hover:text-amber-400 transition star-label" data-value="5">★</label>
+                
+                <input type="radio" name="rating" id="rating4" value="4" required class="hidden">
+                <label for="rating4" class="text-3xl cursor-pointer text-slate-300 hover:text-amber-400 transition star-label" data-value="4">★</label>
+                
+                <input type="radio" name="rating" id="rating3" value="3" required class="hidden">
+                <label for="rating3" class="text-3xl cursor-pointer text-slate-300 hover:text-amber-400 transition star-label" data-value="3">★</label>
+                
+                <input type="radio" name="rating" id="rating2" value="2" required class="hidden">
+                <label for="rating2" class="text-3xl cursor-pointer text-slate-300 hover:text-amber-400 transition star-label" data-value="2">★</label>
+                
+                <input type="radio" name="rating" id="rating1" value="1" required class="hidden">
+                <label for="rating1" class="text-3xl cursor-pointer text-slate-300 hover:text-amber-400 transition star-label" data-value="1">★</label>
+              </div>
+              <span id="rating-value" class="text-sm text-slate-500 mt-1 block">Click a star to rate</span>
+            </div>
+
+            <!-- Subject -->
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Review Title</label>
+              <input type="text" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" name="subject" placeholder="Summarize your experience" required>
+            </div>
+
+            <!-- Review -->
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Your Review</label>
+              <textarea class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition resize-y min-h-[100px]" name="review" rows="4" placeholder="Share your experience with this product..." required></textarea>
+            </div>
+
+            <!-- Submit -->
+            {% if user.is_authenticated %}
+              <button type="submit" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-indigo-200/50 hover:shadow-indigo-300/60 transition-all duration-300 hover:scale-105">
+                <span>Submit Review</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </button>
+            {% else %}
+              <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                <p class="text-amber-800">
+                  You must be logged in to post a review.
+                  <a href="{% url 'login' %}" class="font-bold text-indigo-600 hover:text-indigo-700 underline">Login now</a>
+                </p>
+              </div>
+            {% endif %}
+          </form>
+          
+          {% include "includes/alerts.html" %}
+        </div>
+
+        <!-- Customer Reviews Header -->
+        <div class="border-t border-slate-100 pt-8">
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <h3 class="text-2xl font-bold text-slate-800">Customer Reviews</h3>
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-0.5 text-amber-400 text-sm">
+                {% with avg=single_product.averageReview|default:0|floatformat:0 %}
+                  {% if avg >= "1" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                  {% if avg >= "2" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                  {% if avg >= "3" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                  {% if avg >= "4" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                  {% if avg >= "5" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                {% endwith %}
+              </div>
+              <span class="text-sm font-medium text-slate-500">{{ single_product.countReview }} reviews</span>
+            </div>
+          </div>
+
+          <!-- Reviews List -->
+          <div class="space-y-4">
+            {% for review in reviews %}
+              <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 transition hover:shadow-md">
+                <div class="flex flex-wrap items-start justify-between gap-4 mb-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
+                      {{ review.user.first_name|slice:":1"|upper }}{{ review.user.last_name|slice:":1"|upper }}
+                    </div>
+                    <div>
+                      <h6 class="font-semibold text-slate-800">{{ review.user.full_name }}</h6>
+                      <span class="text-xs text-slate-400">{{ review.created_at|date:"F d, Y" }}</span>
+                    </div>
+                  </div>
+                  <!-- Individual Review Rating -->
+                  <div class="flex items-center gap-0.5 text-amber-400 text-sm">
+                    {% with rating=review.rating|default:0|floatformat:0 %}
+                      {% if rating >= "1" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                      {% if rating >= "2" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                      {% if rating >= "3" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                      {% if rating >= "4" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                      {% if rating >= "5" %}<span><i class="fa fa-star"></i></span>{% else %}<span><i class="fa fa-star-o"></i></span>{% endif %}
+                    {% endwith %}
+                  </div>
+                </div>
+                <h6 class="font-semibold text-slate-700 mb-1">{{ review.subject }}</h6>
+                <p class="text-sm text-slate-600 leading-relaxed">{{ review.review }}</p>
+              </div>
+            {% empty %}
+              <div class="text-center py-12">
+                <div class="text-6xl mb-4">💬</div>
+                <h4 class="text-xl font-bold text-slate-700">No Reviews Yet</h4>
+                <p class="text-slate-500 mt-1">Be the first to review this product!</p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+<!-- ========================= PRODUCT DETAIL END// ========================= -->
+
+<!-- Custom JavaScript for star rating -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.star-label');
+    const ratingText = document.getElementById('rating-value');
+    
+    stars.forEach((star, index) => {
+      star.addEventListener('click', function() {
+        const value = this.dataset.value;
+        // Update the text
+        const ratingMap = {
+          '5': '⭐ Excellent!',
+          '4': '👍 Good',
+          '3': '😐 Average',
+          '2': '👎 Below Average',
+          '1': '😫 Poor'
+        };
+        ratingText.textContent = ratingMap[value] || 'Selected rating: ' + value;
+        
+        // Highlight stars
+        stars.forEach((s, i) => {
+          if (i >= stars.length - parseInt(value)) {
+            s.style.color = '#fbbf24';
+          } else {
+            s.style.color = '#cbd5e1';
+          }
+        });
+      });
+      
+      star.addEventListener('mouseenter', function() {
+        const value = this.dataset.value;
+        stars.forEach((s, i) => {
+          if (i >= stars.length - parseInt(value)) {
+            s.style.color = '#fbbf24';
+          } else {
+            s.style.color = '#cbd5e1';
+          }
+        });
+      });
+      
+      star.addEventListener('mouseleave', function() {
+        // Reset to selected state
+        const selected = document.querySelector('input[name="rating"]:checked');
+        if (selected) {
+          const val = selected.value;
+          stars.forEach((s, i) => {
+            if (i >= stars.length - parseInt(val)) {
+              s.style.color = '#fbbf24';
+            } else {
+              s.style.color = '#cbd5e1';
+            }
+          });
+        } else {
+          stars.forEach(s => {
+            s.style.color = '#cbd5e1';
+          });
+          ratingText.textContent = 'Click a star to rate';
+        }
+      });
+    });
+  });
+</script>
+
+<!-- Custom CSS for rating stars -->
+<style>
+  .star-label {
+    font-size: 2.5rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+  }
+  .star-label:hover {
+    transform: scale(1.1);
+  }
+  .star-label:hover ~ .star-label {
+    color: #fbbf24 !important;
+  }
+  /* Reverse order so hover works properly */
+  .star-label:has(~ .star-label:hover) {
+    color: #fbbf24 !important;
+  }
+</style>
 
 {% endblock %}
